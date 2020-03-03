@@ -8,7 +8,7 @@ import random
 class OxyCSBot(ChatBot):
     """A simple chatbot that directs students to office hours of CS professors."""
 
-    STATES = ['cheaper_argument', 'more_humane_argument', 'dissuades_people_argument', 'eye_for_eye_argument', 'deserves_worst_fate_argument', 'cant_contribute_argument', 'wont_change_argument']
+    STATES = ['waiting','main_question','cheaper_argument', 'more_humane_argument', 'dissuades_people_argument', 'eye_for_eye_argument', 'deserves_worst_fate_argument', 'cant_contribute_argument', 'wont_change_argument']
     
 
     TAGS = {
