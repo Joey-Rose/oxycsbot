@@ -5,7 +5,7 @@ from chatbot import ChatBot
 import random
 import indicoio
 
-indicoio.config.api_key = 'cbd8b7b9fff405463abda7d325a40890';
+indicoio.config.api_key = 'cbd8b7b9fff405463abda7d325a40890'
 
 class OxyCSBot(ChatBot):
     """A simple chatbot that directs students to office hours of CS professors."""
