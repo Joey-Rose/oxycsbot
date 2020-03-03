@@ -3,7 +3,9 @@
 
 from chatbot import ChatBot
 import random
+import indicoio
 
+indicoio.config.api_key = 'cbd8b7b9fff405463abda7d325a40890';
 
 class OxyCSBot(ChatBot):
     """A simple chatbot that directs students to office hours of CS professors."""
@@ -74,6 +76,16 @@ class OxyCSBot(ChatBot):
         'ok' : 'ok',
         'okay' : 'okay'
 
+        #generic tags
+        'hello' : 'hello',
+        'hi' : 'hi',
+        'greetings' : 'greetings',
+
+        'Capital punishment' : 'Capital punishment',
+        'capital punishment' : 'capital punishment',
+        'Death penalty' : 'Death Penalty',
+        'death penalty' : 'death Penalty'
+
     }
 
     argumentsList = ['cheaper_argument', 'more_humane_argument', 'dissuades_people_argument', 'eye_for_eye_argument', 'deserves_worst_fate_argument', 'cant_contribute_argument', 'wont_change_argument']
@@ -128,12 +140,13 @@ class OxyCSBot(ChatBot):
         # else:
         #     return self.finish('confused')
 
-        if 'hello' in tags:
+        if 'hello' in tags or 'hi' in tags or 'greetings' in tags:
             return self.go_to_state('main_question')
-        elif 'hello' not in tags and message.sentiment > .5:
-            return self.go_to_state('pose_topic')
-        elif 'hello' not in tags and message.sentiment < .5:
-            return self.finish('agree')
+        elif 'Capital punishment' in tags or 'capital punishment' in tags or 'Death penalty' in tags or 'death penalty' in tags and 'hello' not in tags:
+            if indicoio.sentiment(message) < .5:
+                return self.go_to_state('pose_topic')
+            elif indicoio.sentiment(message) >= .5:
+                return self.finish('agree')
         else:
             return self.finish('confused')
 
