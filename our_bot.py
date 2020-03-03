@@ -74,7 +74,7 @@ class OxyCSBot(ChatBot):
         'yes' : 'yes',
         'right' : 'right',
         'ok' : 'ok',
-        'okay' : 'okay'
+        'okay' : 'okay',
 
         #generic tags
         'hello' : 'hello',
