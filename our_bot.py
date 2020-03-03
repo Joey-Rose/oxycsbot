@@ -142,7 +142,7 @@ class OxyCSBot(ChatBot):
 
         if 'hello' in tags or 'hi' in tags or 'greetings' in tags:
             return self.go_to_state('main_question')
-        elif 'Capital punishment' in tags or 'capital punishment' in tags or 'Death penalty' in tags or 'death penalty' in tags and 'hello' not in tags:
+        elif 'Capital' in tags or 'capital' in tags or 'Death' in tags or 'death' in tags and 'hello' not in tags:
             if indicoio.sentiment(message) < .5:
                 return self.go_to_state('pose_topic')
             elif indicoio.sentiment(message) >= .5:
