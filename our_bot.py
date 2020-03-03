@@ -63,28 +63,32 @@ class OxyCSBot(ChatBot):
         #disagree
 
         'disagree': 'disagree',
-        "don't agree" : "don't agree",
-        'wrong' : 'wrong',
-        'no' : 'no',
-        'nah' : 'nah',
-        'nope' : 'nope',
+        # "don't agree" : "disagree",        #maybe label agree with neg connotation it don't preceeds it?
+        'wrong' : 'disagree',
+        'no' : 'disagree',
+        'nah' : 'disagree',
+        'nope' : 'disagree',
 
         #agree
         'agree' : 'agree',
-        'yes' : 'yes',
-        'right' : 'right',
-        'ok' : 'ok',
-        'okay' : 'okay',
+        'yes' : 'agree',
+        'right' : 'agree',
+        'ok' : 'agree',
+        'okay' : 'agree',
 
         #generic tags
-        'hello' : 'hello',
-        'hi' : 'hi',
-        'greetings' : 'greetings',
+        'hello' : 'greeting',
+        'hi' : 'greeting',
+        'greetings' : 'greeting',
 
-        'Capital punishment' : 'Capital punishment',
-        'capital punishment' : 'capital punishment',
-        'Death penalty' : 'Death Penalty',
-        'death penalty' : 'death Penalty'
+        # 'Capital punishment' : 'Capital punishment',
+        # 'capital punishment' : 'capital punishment',
+        # 'Death penalty' : 'Death Penalty',
+        # 'death penalty' : 'death Penalty'
+        'Capital' : 'capital punishment',
+        'capital' : 'capital punishment',
+        'Death' : 'death penalty',
+        'death' : 'death penalty'
 
     }
 
@@ -103,15 +107,15 @@ class OxyCSBot(ChatBot):
 
     #function used to clean up code -- called by every function when responding
     def determineNextState(self, message, tags):
-        if ('ok' in tags or 'okay' in tags or 'agree' in tags or 'yes' in tags or 'right' in tags) and self.agreeCounter == 3:
+        if 'agree' in tags and self.agreeCounter == 3:
             return 'finish_agree'
-        elif ('ok' in tags or 'okay' in tags or 'agree' in tags or 'yes' in tags or 'right' in tags) and self.agreeCounter < 3:  #TODO how do we pose a new topic?
+        elif 'agree' in tags and self.agreeCounter < 3:  #TODO how do we pose a new topic?
             # randomNumber = random.randrange(0, len(self.argumentsList))
             # return randomself.argumentsList[randomNumber] #return the name of a random argument (.pop() when going to it first ensures that there will only be undiscussed arguments in array)
             return 'finish_agree'
-        elif ('disagree' in tags or 'no' in tags or 'nah' in tags or 'nope' in tags or "don't agree" in tags or 'wrong' in tags) and self.disagreeCounter == 3:
+        elif 'disagree' in tags and self.disagreeCounter == 3:
             return 'finish_disagree'
-        elif ('disagree' in tags or 'no' in tags or 'nah' in tags or 'nope' in tags or "don't agree" in tags or 'wrong' in tags) and self.disagreeCounter < 3:
+        elif 'disagree' in tags and self.disagreeCounter < 3:
             return 'finish_disagree' #TODO how do we pose a new topic?
         else:
             return 'confused'
@@ -140,9 +144,9 @@ class OxyCSBot(ChatBot):
         # else:
         #     return self.finish('confused')
 
-        if 'hello' in tags or 'hi' in tags or 'greetings' in tags:
+        if 'greeting' in tags:
             return self.go_to_state('main_question')
-        elif 'Capital' in tags or 'capital' in tags or 'Death' in tags or 'death' in tags and 'hello' not in tags:
+        elif 'capital punishment' in tags or 'death penalty' in tags and 'hello' not in tags:
             if indicoio.sentiment(message) < .5:
                 return self.go_to_state('pose_topic')
             elif indicoio.sentiment(message) >= .5:
@@ -167,7 +171,7 @@ class OxyCSBot(ChatBot):
         Returns:
             str: The message to send to the user.
         """
-        if "I don't" in tags:
+        if "I don't" in message:
             return self.finish('agree')
         #go through all possible reasons
         elif 'cheap' in tags or 'cost' in tags or 'price' in tags or 'cheaper' in tags:
